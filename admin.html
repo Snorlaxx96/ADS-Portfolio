@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Mhyco</title>
+    <!-- Same CSS as main site for consistency -->
+    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Admin Specific Styles */
+        body {
+            padding-top: 80px;
+        }
+
+        .admin-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(34, 40, 49, 0.95);
+            /* Match main navbar */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            /* Added visible background */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .item-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .item-row {
+            background: rgba(15, 15, 25, 0.8);
+            /* Darker background for items */
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+        }
+
+        .item-row:hover {
+            background: rgba(57, 62, 70, 0.8);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .crud-form {
+            display: grid;
+            gap: 1.2rem;
+            background: rgba(15, 15, 25, 0.9);
+            /* Darker, solid background */
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(100, 200, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .crud-form input,
+        .crud-form textarea,
+        .crud-form select {
+            background: rgba(34, 40, 49, 0.5);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            color: var(--text-main);
+            width: 100%;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .crud-form input:focus,
+        .crud-form textarea:focus,
+        .crud-form select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+            background: rgba(34, 40, 49, 0.8);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- WebGL Canvas for Shader Background -->
+    <canvas id="shader-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;"></canvas>
+    <div class="background-effects"></div> <!-- Grid Overlay -->
+
+    <!-- Watermark -->
+    <div class="watermark"
+        style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); opacity: 0.05; font-size: 20rem; z-index: -1;">
+        ADMIN</div>
+
+    <nav class="admin-nav">
+        <div class="logo">Admin<span class="highlight">Panel</span></div>
+        <button id="logout-btn" class="btn-primary" style="padding: 0.5rem 1.5rem;">Logout</button>
+    </nav>
+
+    <div class="admin-container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('profile')">Profile</button>
+            <button class="tab-btn" onclick="switchTab('skills')">Skills</button>
+            <button class="tab-btn" onclick="switchTab('projects')">Projects</button>
+            <button class="tab-btn" onclick="switchTab('hobbies')">Hobbies</button>
+        </div>
+
+        <!-- PROFILE TAB -->
+        <div id="profile" class="tab-content active">
+            <h2 class="section-title">Edit Profile</h2>
+            <form id="profile-form" class="crud-form">
+                <input type="text" id="p-name" placeholder="Name">
+                <input type="text" id="p-title" placeholder="Title">
+                <textarea id="p-bio" rows="4" placeholder="Bio"></textarea>
+                <input type="email" id="p-email" placeholder="Email">
+                <input type="text" id="p-github" placeholder="GitHub URL">
+                <input type="text" id="p-linkedin" placeholder="LinkedIn URL">
+                <button type="submit" class="btn-primary">Update Profile</button>
+            </form>
+        </div>
+
+        <!-- SKILLS TAB -->
+        <div id="skills" class="tab-content">
+            <h2 class="section-title">Manage Skills</h2>
+            <form id="skill-form" class="crud-form">
+                <input type="text" id="s-name" placeholder="Skill Name (e.g. PHP)">
+                <select id="s-category">
+                    <option value="Frontend">Frontend</option>
+                    <option value="Backend">Backend</option>
+                    <option value="Database">Database</option>
+                    <option value="Tools">Tools</option>
+                </select>
+                <input type="number" id="s-prof" placeholder="Proficiency (0-100)">
+                <button type="submit" class="btn-primary">Add Skill</button>
+            </form>
+            <div id="skills-list" class="item-list"></div>
+        </div>
+
+        <!-- PROJECTS TAB -->
+        <div id="projects" class="tab-content">
+            <h2 class="section-title">Manage Projects</h2>
+            <form id="project-form" class="crud-form">
+                <input type="text" id="prj-title" placeholder="Project Title">
+                <textarea id="prj-desc" placeholder="Description"></textarea>
+                <input type="text" id="prj-tech" placeholder="Tech Stack (comma separated)">
+                <input type="text" id="prj-img" placeholder="Image URL">
+                <input type="text" id="prj-link" placeholder="Project Link">
+                <button type="submit" class="btn-primary">Add Project</button>
+            </form>
+            <div id="projects-list" class="item-list"></div>
+        </div>
+
+        <!-- HOBBIES TAB -->
+        <div id="hobbies" class="tab-content">
+            <h2 class="section-title">Manage Hobbies</h2>
+            <form id="hobby-form" class="crud-form">
+                <input type="text" id="h-name" placeholder="Hobby Name">
+                <input type="text" id="h-desc" placeholder="Description">
+                <button type="submit" class="btn-primary">Add Hobby</button>
+            </form>
+            <div id="hobbies-list" class="item-list"></div>
+        </div>
+
+    </div>
+
+    <!-- Reusing existing app functions heavily modified for admin -->
+    <script src="shader.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

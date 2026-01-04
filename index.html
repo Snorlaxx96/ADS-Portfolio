@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Premium Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css?v=9">
+</head>
+
+<body>
+    <!-- WebGL Canvas for Shader Background -->
+    <canvas id="shader-bg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;"></canvas>
+    <div class="background-effects"></div> <!-- Grid Overlay -->
+
+    <div class="nav-trigger"></div>
+    <nav class="navbar">
+        <div class="logo">Mhy<span class="highlight">co</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Profile</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#hobbies">Hobbies</a></li>
+            <li><a href="#contact" class="btn-primary">Contact</a></li>
+        </ul>
+        <!-- Hamburger Removed -->
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="watermark" style="font-size: 20rem; opacity: 0.1;">PORTFOLIO</div>
+            <div class="hero-content" id="profile-container">
+                <!-- Content injected by JS -->
+                <div class="skeleton-loader"></div>
+            </div>
+            <div class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Skill Stats View (Advanced SQL Feature Showcase) -->
+        <section id="about" class="about-section glass-panel">
+            <div class="watermark">ABOUT</div>
+            <h2 class="section-title" style="position: relative; z-index: 1;">About Me & Stats</h2>
+            <div class="about-grid" style="position: relative; z-index: 1;">
+                <div class="about-text" id="about-text-container">
+                    <p>Loading bio...</p>
+                </div>
+                <div class="stats-display" id="experience-display">
+                    <!-- Calculated via SQL Function -->
+                    <div class="stat-card">
+                        <h3 id="exp-years">3+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-check-circle" style="font-size: 0.8em; margin-right: 10px;"></i>100%</h3>
+                        <p>Commitment</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="watermark">EXPERTISE</div>
+            <h2 class="section-title" style="position: relative; z-index: 1;">Technical Expertise</h2>
+            <div class="skills-container" id="skills-container" style="position: relative; z-index: 1;">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="watermark">WORK</div>
+            <h2 class="section-title" style="position: relative; z-index: 1;">Featured Projects</h2>
+            <p class="subtitle" style="position: relative; z-index: 1;">By Mhyco Giselo</p>
+            <div class="projects-grid" id="projects-container" style="position: relative; z-index: 1;">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- Hobbies Section -->
+        <section id="hobbies" class="hobbies-section">
+            <div class="watermark">PASSION</div>
+            <h2 class="section-title" style="position: relative; z-index: 1;">Beyond Code</h2>
+            <div class="hobbies-grid" id="hobbies-container" style="position: relative; z-index: 1;">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="contact-container glass-panel">
+                <h2 class="section-title">Get In Touch</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required placeholder="Let's build something..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Portfolio. Built with PHP, MySQL & Advanced SQL Features.</p>
+    </footer>
+
+    <script src="shader.js"></script>
+    <script src="app.js?v=2"></script>
+</body>
+
+</html>
